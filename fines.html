@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Штрафы</title>
+</head>
+<body>
+    <p><a href="{{ url_for('home') }}">На главную</a></p>
+    <h1>Штрафы</h1>
+
+    <h3>Посчитать сумму штрафов по категории:</h3>
+    <form method="POST" action="{{ url_for('fines') }}">
+        <label for="sum_category_id">Категория:</label>
+        <select name="sum_category_id" id="sum_category_id" required>
+            <option value="">-- Выберите категорию --</option>
+            {% for category in categories %}
+                <option value="{{ category.category_id }}">{{ category.category_name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Рассчитать сумму штрафов</button>
+    </form>
+
+    {% if total_sum is not none %}
+        <p>Общая сумма штрафов категории  "{{ selected_category_name }}": {{ total_sum }} рублей</p>
+    {% endif %}
+
+    <h3>Список всех штрафов</h3>
+    <p><a href="{{ url_for('add_fine') }}">Добавить штраф</a></p>
+
+    {% if fines %}
+        <table border="1" cellpadding="5" cellspacing="0">
+            <tr>
+                <th>ID</th>
+                <th>Читатель</th>
+                <th>Библиотекарь</th>
+                <th>Категория</th>
+                <th>Дата погашения</th>
+                <th>Действия</th>
+            </tr>
+            {% for fine in fines %}
+            <tr>
+                <td>{{ fine.fine_id }}</td>
+                <td>{{ fine.reader_name }}</td>
+                <td>{{ fine.librarian_name }}</td>
+                <td>{{ fine.category_name }}</td>
+                <td>{{ fine.repayment_date }}</td>
+                <td>
+                    <a href="{{ url_for('edit_fine', fine_id=fine.fine_id) }}">Редактировать</a> |
+                    <form method="POST" action="{{ url_for('delete_fine', fine_id=fine.fine_id) }}" style="display:inline;">
+                        <input type="submit" value="Удалить">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Штрафов пока нет.</p>
+    {% endif %}
+</body>
+</html>

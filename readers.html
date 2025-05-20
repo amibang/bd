@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Читатели</title>
+</head>
+<body>
+    <a href="{{ url_for('home') }}">Назад</a>
+    <h1>Читатели</h1>>
+    <form method="post">
+        <input type="text" name="search" placeholder="Поиск читателя" value="{{ search or '' }}">
+        <button type="submit">Поиск</button>
+    </form>
+    <a href="{{ url_for('add_reader') }}">Добавить нового читателя</a>
+    <br><br>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Тип</th>
+            <th>Телефон</th>
+            <th>Действия</th>
+        </tr>
+        {% for reader in readers %}
+        <tr>
+            <td>{{ reader.reader_id }}</td>
+            <td>{{ reader.reader_name }}</td>
+            <td>{{ reader.student_or_teacher }}</td>
+            <td>{{ reader.reader_phonenumber }}</td>
+            <td>
+                <a href="{{ url_for('edit_reader', reader_id=reader.reader_id) }}">Редактировать</a>
+                <form action="{{ url_for('delete_reader', reader_id=reader.reader_id) }}" method="post" style="display:inline;">
+                    <button type="submit" onclick="return confirm('Удалить читателя?')">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+</body>
+</html>
