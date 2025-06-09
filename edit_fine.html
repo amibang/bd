@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование штрафа</title>
+</head>
+<body>
+    <h1>Редактировать штраф</h1>
+    <form method="post">
+        <label for="reader_id">Читатель ID:</label>
+        <input type="text" name="reader" id="reader_id" required><br>
+
+        <label for="librarian_id">Библиотекарь ID:</label>
+        <input type="text" name="librarian" id="librarian_id" required><br>
+
+        <label>Категория штрафа:</label>
+        <select name="category" required>
+            {% for c in categories %}
+            <option value="{{ c.category_id }}" {% if c.category_id == fine.category %}selected{% endif %}>{{ c.category_name }} ({{ c.fine_summ }} руб)</option>
+            {% endfor %}
+        </select><br>
+
+        <label>Дата погашения:</label>
+        <input type="date" name="repayment_date" value="{{ fine.repayment_date }}" required><br><br>
+
+        <button type="submit">Сохранить изменения</button>
+    </form>
+    <br>
+    <a href="{{ url_for('fines') }}">Назад к списку штрафов</a>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать запрос</title>
+</head>
+<body>
+    <h2>Редактирование запроса №{{ request.request_id }}</h2>
+    <form method="POST">
+        <label>Название книги:</label><br>
+        <input type="text" name="book_title" value="{{ request.book_title }}" required><br><br>
+
+        <label>Автор:</label><br>
+        <input type="text" name="author" value="{{ request.author }}" required><br><br>
+
+        <label>Издательство:</label><br>
+        <input type="text" name="publishing_house" value="{{ request.publishing_house }}" required><br><br>
+
+        <label>Год издания:</label><br>
+        <input type="number" name="publishing_date" value="{{ request.publishing_date }}" required><br><br>
+
+        <label>Категория:</label><br>
+        <select name="category_id" required>
+            {% for c in categories %}
+            <option value="{{ c.category_id }}" {% if c.category_id == request.category_id %}selected{% endif %}>{{ c.category_name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label>Статус:</label><br>
+        <select name="status">
+            <option value="Рассматривается" {% if request.status == 'pending' %}selected{% endif %}>Рассматривается</option>
+            <option value="Одобрено" {% if request.status == 'approved' %}selected{% endif %}>Одобрено</option>
+            <option value="Отклонено" {% if request.status == 'rejected' %}selected{% endif %}>Отклонено</option>
+        </select><br><br>
+
+        <button type="submit">Сохранить</button>
+    </form>
+    <br>
+    <a href="{{ url_for('view_book_requests') }}">⬅ Назад к запросам</a>
+</body>
+</html>

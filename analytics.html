@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Аналитика</title>
+</head>
+<body>
+    <a href="{{ url_for('home') }}">🏠 На главную</a>
+    <h3>Аналитика</h3>
+
+    <form method="post">
+      <h4>Книги по автору</h4>
+      Автор: <input name="author">
+      <button type="submit">Показать</button>
+    </form>
+
+    {% if books %}
+      <table border="1">
+        <tr><th>Название</th><th>Год</th></tr>
+        {% for b in books %}
+        <tr><td>{{ b[0] }}</td><td>{{ b[1] }}</td></tr>
+        {% endfor %}
+      </table>
+    {% endif %}
+
+    <form method="post">
+      <h4>Штрафы по категории</h4>
+      ID категории: <input name="category_id">
+      <button type="submit">Показать</button>
+    </form>
+
+    {% if fines %}
+      <table border="1">
+        <tr><th>Читатель</th><th>Дата погашения</th></tr>
+        {% for f in fines %}
+        <tr><td>{{ f[0] }}</td><td>{{ f[1] }}</td></tr>
+        {% endfor %}
+      </table>
+    {% endif %}
+</body>
+</html>

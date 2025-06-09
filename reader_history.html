@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>История читателя</title>
+</head>
+<body>
+    <h1>История читателя</h1>
+    <form method="POST">
+        <label for="reader_id">Введите ID читателя:</label>
+        <input type="text" name="reader_id" required>
+        <button type="submit">Показать историю</button>
+    </form>
+    {% if reader_id %}
+        <h2>История для читателя с ID: {{ reader_id }}</h2>
+        {% if history %}
+            <table border="1">
+                <tr>
+                    <th>Название книги</th>
+                    <th>Автор</th>
+                    <th>Издательство</th>
+                    <th>Год издания</th>
+                </tr>
+                {% for book in history %}
+                <tr>
+                    <td>{{ book[0] }}</td>
+                    <td>{{ book[1] }}</td>
+                    <td>{{ book[2] }}</td>
+                    <td>{{ book[3] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>Нет записей о книгах, взятых этим читателем.</p>
+        {% endif %}
+    {% endif %}
+    <a href="{{ url_for('home') }}">Назад</a>
+</body>
+</html>

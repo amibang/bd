@@ -1,0 +1,74 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Запрос на книги</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <a href="{{ url_for('books') }}">Назад к книгам</a>-->
+<!--    <h2>Запросы на книги</h2>-->
+
+<!--    <h3>Новый запрос на книгу</h3>-->
+<!--    <form method="post">-->
+<!--        <label for="book_id">Выберите книгу:</label>-->
+<!--        <select name="book_id" id="book_id">-->
+<!--            {% for book in books %}-->
+<!--            <option value="{{ book.book_id }}">{{ book.book_title }}</option>-->
+<!--            {% endfor %}-->
+<!--        </select>-->
+<!--        <button type="submit">Отправить запрос</button>-->
+<!--    </form>-->
+
+<!--    <hr>-->
+<!--    <h3>Мои запросы</h3>-->
+<!--    <ul>-->
+<!--        {% for request in book_requests %}-->
+<!--        <li>-->
+<!--            Книга: {{ request.book_title }} | Статус: {{ request.status }}-->
+<!--            <form method="post" action="{{ url_for('delete_book_request', request_id=request.id) }}">-->
+<!--                <button type="submit">Удалить запрос</button>-->
+<!--            </form>-->
+<!--        </li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить запрос на книгу</title>
+</head>
+<body>
+    <h2>Запрос на книгу</h2>
+
+    <form method="POST">
+        <label>Название книги:</label>
+        <input type="text" name="book_title" required><br><br>
+
+        <label>Автор:</label>
+        <input type="text" name="author" required><br><br>
+
+        <label>Издательство:</label>
+        <input type="text" name="publishing_house" required><br><br>
+
+        <label>Год издания:</label>
+        <input type="number" name="publishing_date" required><br><br>
+
+        <label>Категория книги:</label>
+        <select name="category_id" required>
+            <option value="">--Выберите категорию--</option>
+            {% for category in categories %}
+            <option value="{{ category.category_id }}">{{ category.category_name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label>Ваше ФИО:</label>
+        <input type="text" name="reader_name" required><br><br>
+
+        <button type="submit">Отправить запрос</button>
+    </form>
+
+    <a href="{{ url_for('books') }}">⬅ Вернуться к списку книг</a>
+</body>
+</html>

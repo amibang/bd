@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+</head>
+<body>
+    <h1>Добро пожаловать в библиотеку</h1>
+
+    {% if not session.get('is_admin') %}
+        <a href="{{ url_for('books') }}">Перейти к списку книг</a><br>
+        <a href="{{ url_for('reader_history') }}">История читателя</a>
+        <form method="post" action="{{ url_for('admin_login') }}">
+            <button type="submit">🔐 Вход для библиотекаря</button>
+        </form>
+    {% endif %}
+
+    {% if session.get('is_admin') %}
+        <h3>Вы вошли как администратор</h3>
+        <ul>
+            <li><a href="{{ url_for('view_book_requests') }}">📖 Запросы на книги</a></li>
+            <li><a href="{{ url_for('readers') }}">👥 Читатели</a></li>
+            <li><a href="{{ url_for('fines') }}">💰 Штрафы</a></li>
+            <li><a href="{{ url_for('books') }}">📚 Управление книгами</a></li>
+            <li><a href="{{ url_for('admin_logout') }}">🚪 Выйти из панели</a></li>
+        </ul>
+    {% endif %}
+</body>
+</html>

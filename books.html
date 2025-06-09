@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Книги</title>
+</head>
+<body>
+    <a href="{{ url_for('home') }}">На главную</a>
+    <h2>Поиск книг</h2>
+    <form method="post">
+        Название: <input type="text" name="title">
+        Автор: <input type="text" name="author">
+        Год издания: <input type="number" name="year">
+        Издательство: <input type="text" name="publisher">
+        Категория:
+        <select name="category_id">
+            <option value="">--Любая--</option>
+            {% for c in categories %}
+            <option value="{{ c.category_id }}">{{ c.category_name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Искать</button>
+    </form>
+    <hr>
+    <h2>Список книг</h2>
+
+    {% if not session.get('is_admin') %}
+    <p>
+        <a href="{{ url_for('add_book_request') }}">📚 Запросы на книги</a>
+    </p>
+    {% endif %}
+    <p>
+        <a href="{{ url_for('add_book') }}">Добавить книгу</a>
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Автор</th>
+                <th>Издательство</th>
+                <th>Год издания</th>
+                <th>Категория</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{ book.book_id }}</td>
+                <td>{{ book.book_title }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.publishing_house }}</td>
+                <td>{{ book.publishing_date }}</td>
+                <td>{{ book.category_name }}</td>
+                <td>
+                    {% if session.get('is_admin') %}
+                        <a href="{{ url_for('edit_book', book_id=book.book_id) }}"
+                           class="btn btn-edit">Редактировать</a>
+                        <form action="{{ url_for('delete_book', book_id=book.book_id) }}"
+                              method="POST" style="display: inline;">
+                            <button type="submit"
+                                    class="btn btn-delete"
+                                    onclick="return confirm('Вы уверены, что хотите удалить эту книгу?')">
+                                Удалить
+                            </button>
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <hr>
+</body>
+</html>

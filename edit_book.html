@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование книги</title>
+</head>
+<body>
+<h1>Редактировать книгу</h1>
+    <form method="POST">
+        <label>Название:</label><input name="title" value="{{ book[1] }}"><br>
+        <label>Автор:</label><input name="author" value="{{ book[2] }}"><br>
+        <label>Издательство:</label><input name="publishing_house" value="{{ book[3] }}"><br>
+        <label>Год издания:</label><input name="publishing_date" type="number" value="{{ book[4] }}"><br>
+        <label>Категория (ID):</label><input name="category" value="{{ book[5] }}"><br>
+        <button type="submit">Сохранить</button>
+    </form>
+    <a href="{{ url_for('books') }}">Назад</a>
+</body>
+</html>
